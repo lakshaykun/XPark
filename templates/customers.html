@@ -1,0 +1,107 @@
+<div>
+    <h2>Customers</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Customer ID</th>
+                <th scope="col">Customer Name</th>
+                <th scope="col">Customer Email</th>
+                <th scope="col">Customer Phone</th>
+                <th scope="col">Customer Plate</th>
+                <th scope="col">Customer Status</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer['customer_id'] }}</td>
+                <td>{{ customer['customer_name'] }}</td>
+                <td>{{ customer['customer_email'] }}</td>
+                <td>{{ customer['customer_phone'] }}</td>
+                <td>{{ customer['customer_plate'] }}</td>
+                <td>{{ customer['customer_parking'] }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editCustomerModal{{ customer['customer_id'] }}">
+                        Edit
+                    </button>
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCustomerModal{{ customer['customer_id'] }}">
+                        Delete
+                    </button>
+                </td>
+            </tr>
+            <div class="modal fade" id="editCustomerModal{{ customer['customer_id'] }}" tabindex="-1" aria-labelledby="editCustomerModal{{ customer['customer_id'] }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editCustomerModal{{ customer['customer_id'] }}">Edit Customer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/edit_customer" method="post">
+                                <div class="mb-3">
+                                    <label for="customer_id" class="form-label">Customer ID</label>
+                                    <input type="text" class="form-control" id="customer_id" name="customer_id" value="{{ customer['customer_id'] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ customer['customer_name'] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_email" class="form-label">Customer Email</label>
+                                    <input type="text" class="form-control" id="customer_email" name="customer_email" value="{{ customer['customer_email'] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_phone" class="form-label">Customer Phone</label>
+                                    <input type="text" class="form-control" id="customer_phone" name="customer_phone" value="{{ customer['customer_phone'] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_plate" class="form-label">Customer Plate</label>
+                                    <input type="text" class="form-control" id="customer_plate" name="customer_plate" value="{{ customer['customer_plate'] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_parkings" class="form-label">Customer Status</label>
+                                    <input type="text" class="form-control" id="customer_parkings" name="customer_parkings" value="{{ customer['customer_parkings'] }}" required>
+                                </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Edit</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="deleteCustomerModal{{ customer['customer_id'] }}" tabindex="-1" aria-labelledby="deleteCustomerModal{{ customer['customer_id'] }}" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteCustomerModal{{ customer['customer_id'] }}">Delete Customer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <fieldset disabled>
+                            <form action="/delete_customer" method="post">
+                                <div class="mb-3">
+                                    <label for="customer_id" class="form-label">Customer ID</label>
+                                    <input type="text" class="form-control" id="customer_id" name="customer_id" value="{{ customer['customer_id'] }}" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="customer_name" class="form-label">Customer Name</label>
+                                    <input type="text" class="form-control" id="customer_name" name="customer_name" value="{{ customer['customer_name'] }}" required>
+                                </div>
+                            </fieldset>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </tbody>
+    </table>
+</div>

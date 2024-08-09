@@ -1,0 +1,18 @@
+<div class="container">
+    <h2>Settings</h2>
+    <form action="/add_settings" method="post">
+        <div class="mb-3">
+            <label for="settings_id" class="form-label">Settings ID</label>
+            <input type="text" class="form-control" id="settings_id" name="settings_id" value="{{ settings['settings_id'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="settings_name" class="form-label">Settings Name</label>
+            <input type="text" class="form-control" id="settings_name" name="settings_name" value="{{ settings['settings_name'] }}" required>
+        </div>
+        <div class="mb-3">
+            <label for="settings_value" class="form-label">Settings Value</label>
+            <input type="text" class="form-control" id="settings_value" name="settings_value" value="{{ settings['settings_value'] }}" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
+</div>
