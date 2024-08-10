@@ -34,19 +34,31 @@ def generate_frames(url):
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
 
+@app.route('/')
+def index():
+    page = request.args.get('page')
+    if page == "admin_login":
+        return render_template('cover.html', page = page)
+    elif page == "user_login":
+        return render_template('cover.html', page = page)
+    elif page == "user_register":
+        return render_template('cover.html', page = page)
+    else:
+        return render_template('cover.html', page = page)
 
 # admin routes
 admin_id = "lakshu1000@gmail.com"
+admin_pass = "12345"
 
 @app.route('/admin_login', methods=['POST'])
 def admin_login():
     email = request.form.get('email')
     password = request.form.get('password')
-    if email == admin_id and password == "lakshay1920":
+    if email == admin_id and password == admin_pass:
         session['user_id'] = email
         return redirect('/admin')
     else:
-        return redirect('/login')
+        return redirect('/?page=admin_login')
 
 @app.route('/admin')
 def admin():
@@ -64,7 +76,7 @@ def admin():
             else:
                 return render_template('admin.html', page = page)
     else:
-        return redirect('/')
+        return redirect("/?page=admin_login")
 
 @app.route('/add_camera', methods=['POST'])
 def add_camera():
@@ -90,6 +102,19 @@ def video_feed():
             return Response(generate_frames(url), mimetype='multipart/x-mixed-replace; boundary=frame')
     else:
         return redirect('/')
+    
+@app.route('/edit_camera', methods=['POST'])
+def edit_camera():
+    if 'user_id' in session:
+        if session['user_id'] == admin_id:
+            camera_id = request.form.get('camera_id')
+            name = request.form.get('camera_name')
+            url = request.form.get('camera_url')
+            cameras.update_one({"_id":camera_id}, {"$set":{"name":name, "url":url}})
+            return redirect('/admin?page=cameras')
+    else:
+        return redirect('/')
+
 
 @app.route('/delete_camera', methods=['POST'])
 def delete_camera():
@@ -167,56 +192,35 @@ def admin_logout():
 
 
 # user routes
-@app.route('/')
-def start():
-    if 'user_id' in session:
-        return redirect('/home')
-    else:
-        return redirect('/login')
-
 @app.route('/home')
 def home():
     if 'user_id' not in session:
-        return redirect('/login')
+        return redirect('/?page=user_signin')
     return render_template('home.html')
-                               
-@app.route('/login')
-def login():
-    if 'user_id' in session:
-        return redirect('/home')
-    if 'user_id' in session:
-        return redirect('/admin')
-    return render_template('login.html')
 
-@app.route('/register')
-def register():
-    if 'user_id' in session:
-        return redirect('/home')
-    return render_template('register.html')
-
-@app.route('/login_validation', methods=['POST'])
-def login_validation():
+@app.route('/user_signin', methods=['POST'])
+def user_signin():
     email = request.form.get('email')
     password = request.form.get('password')
     details = users.find_one({"email" : email, "password":password})
     if details == None:
-        return redirect('/register')
+        return redirect('/?page=user_signin')
     else:
         session['user_id'] = details["email"]
         session['user_name'] = details["name"]
         return redirect('/home')
 
-@app.route('/registration', methods=['POST'])
-def registration():
+@app.route('/user_signup', methods=['POST'])
+def user_signup():
     name = request.form.get('name')
     email = request.form.get('email')
     password = request.form.get('password')
     details = users.find_one({"email":email})
     if details == None:
         users.insert_one({"name":name, "email":email, "password":password})
-        return redirect('/login')
+        return redirect('/home')
     else:
-        return redirect('/register')
+        return redirect('/?page=user_signup')
 
 @app.route('/logout')
 def logout():

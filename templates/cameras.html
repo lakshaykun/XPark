@@ -22,7 +22,7 @@
 
 <!-- modal for delete button -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteModalLabel">Delete Camera</h5>
@@ -30,7 +30,6 @@
             </div>
             <div class="modal-body">
                 <form action="/delete_camera" method="post">
-                    <fieldset disabled>
                     <div class="mb-3 camera-id">
                         <label for="camera_id" class="form-label">Camera ID</label>
                         <input type="text" class="form-control" id="camera_id" name="camera_id" required>
@@ -39,7 +38,6 @@
                         <label for="camera_name" class="form-label">Camera Name</label>
                         <input type="text" class="form-control" id="camera_name" name="camera_name" required>
                     </div>
-                    </fieldset>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger">Delete</button>
@@ -52,7 +50,7 @@
 
 <!-- modal for edit button -->
 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editModalLabel">Edit Camera</h5>
@@ -60,10 +58,12 @@
             </div>
             <div class="modal-body">
                 <form action="/edit_camera" method="post">
+                    
                     <div class="mb-3 camera-id">
                         <label for="camera_id" class="form-label">Camera ID</label>
                         <input type="text" class="form-control" id="camera_id" name="camera_id" required>
                     </div>
+                    
                     <div class="mb-3 camera-name">
                         <label for="camera_name" class="form-label">Camera Name</label>
                         <input type="text" class="form-control" id="camera_name" name="camera_name" required>
@@ -84,13 +84,15 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Add Camera
-</button>
+<div class="position-absolute bottom-0 end-0 my-2 mx-2">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Camera
+    </button>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Add Camera</h5>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>XPark</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/cover.css') }}" rel="stylesheet">
+  </head>
+  <body class="d-flex h-100 text-center text-white bg-dark">
+    
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h3 class="float-md-start mb-0"> <a class="nav-link" href="/">XPark</a></h3>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link" href="/home">Home</a>
+        <a class="nav-link" href="/admin">Admin</a>
+        <a class="nav-link" href="/?page=contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="px-3">
+    {% block content %}
+                {% if page == 'admin_login' %}
+                    {% include "admin_login.html" %}
+                {% elif page == 'user_signin' %}
+                    {% include "user_signin.html" %}
+                {% elif page == 'user_signup' %}
+                    {% include "user_signup.html" %}
+                {% elif page == 'contact' %}
+                    {% include "contact.html" %}
+                {% else %}
+                  <h1>Best Parking System</h1>
+                  <p class="lead">
+                    XPark is the best parking system in the world. It is easy to use and very efficient. More convenience, less circling.
+                  </p>
+                  <p class="lead">
+                    <a href="/?page=user_signin" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Sign in</a>
+                    <a href="/?page=user_signup" class="btn btn-lg btn-secondary fw-bold border-white bg-white">Sign up</a>
+                  </p>
+                {% endif %}
+            {% endblock %}
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <div class="container">
+      @XPark
+  </div>
+  </footer>
+</div>
+
+
+    
+  </body>
+</html>
